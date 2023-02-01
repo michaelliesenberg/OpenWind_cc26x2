@@ -29,13 +29,12 @@
 UART2_Handle uart;
 UART2_Params uartParams;
 
-size_t numBytesRead;
 size_t bytesRead;
 size_t byteAvailable=0;
 char line[MINMEA_MAX_SENTENCE_LENGTH * 2];
 char input;
 bool isReading = false;
-bool isReadingClear = false;
+int16_t readReturn =0;
 /*
  *  ======== callbackFxn ========
  */
@@ -46,14 +45,11 @@ void callbackFxn(UART2_Handle handle, void *buffer, size_t count, void *userArg,
         /* RX error occured in UART2_read() */
     }
     else {
-        if(!isReadingClear) {
-            memcpy(line, buffer, count);
-            numBytesRead = count;
-            OPENWIND_Event(OW_WIND_GPS_READ);
-        }
+        memcpy(line, buffer, count);
+        bytesRead = count;
+        OPENWIND_Event(OW_WIND_GPS_READ);
     }
     isReading=false;
-    isReadingClear=false;
 }
 
 
@@ -65,11 +61,10 @@ void YIC71513PGMGG_uart_open() {
 
     UART2_Params_init(&uartParams);
     uartParams.baudRate     = 9600;
-    uartParams.readReturnMode = UART2_ReadReturnMode_PARTIAL;//UART2_ReadReturnMode_FULL;
-    uartParams.dataLength = UART2_DataLen_8;
-    uartParams.stopBits = UART2_StopBits_1;
-    uartParams.readMode = UART2_Mode_CALLBACK;
-    uartParams.readCallback = callbackFxn;
+    uartParams.readReturnMode = UART2_ReadReturnMode_PARTIAL;//UART2_ReadReturnMode_FULL; UART2_ReadReturnMode_PARTIAL
+    //uartParams.readMode = UART2_Mode_CALLBACK;
+    //uartParams.readCallback = callbackFxn;
+
 
     uart = UART2_open(CONFIG_UART2_0, &uartParams);
 
@@ -86,6 +81,7 @@ void YIC71513PGMGG_uart_open() {
 
 void YIC71513PGMGG_uart_close() {
 
+    //UART2_readCancel(uart);
     UART2_rxDisable(uart);
     UART2_close(uart);
 
@@ -106,20 +102,23 @@ void YIC71513PGMGG_uart_read() {
         return;
     byteAvailable = UART2_getRxCount(uart);
     if(byteAvailable >= MINMEA_MAX_SENTENCE_LENGTH) {
-        if(!isReadingClear)
-            YIC71513PGMGG_read(MINMEA_MAX_SENTENCE_LENGTH);
+        YIC71513PGMGG_read(MINMEA_MAX_SENTENCE_LENGTH);
+        /*if(readReturn == UART2_STATUS_SUCCESS)
+            OPENWIND_Event(OW_WIND_GPS_READ);
         else
-            YIC71513PGMGG_read(byteAvailable);
+            isReading=false;*/
     }
+
 }
 
 void YIC71513PGMGG_read(int lenght){
     isReading=true;
-    UART2_read(uart, &input, lenght, &bytesRead);
+    //readReturn = UART2_read(uart, &input, lenght, &bytesRead);
+    readReturn = UART2_readTimeout(uart, &input, lenght, &bytesRead, 100);
 }
 
 void YIC71513PGMGG_uart_parse() {
-
+    isReading=false;
     switch (minmea_sentence_id(line, false)) {
         case MINMEA_SENTENCE_RMC: {
             struct minmea_sentence_rmc frame;
@@ -229,7 +228,8 @@ void YIC71513PGMGG_uart_parse() {
         } break;
 
         case MINMEA_INVALID: {
-            //isReadingClear=true;
+            if(!isReading)
+                UART2_flushRx(uart);
         } break;
 
         default: {

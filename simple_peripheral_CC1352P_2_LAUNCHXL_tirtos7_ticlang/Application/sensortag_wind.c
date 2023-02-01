@@ -329,8 +329,6 @@ void SensorTagWind_readData()
     else
         speed_counter++;
 
-
-    TrueWind_measPerTask();
 }
 
 /*********************************************************************
@@ -404,18 +402,17 @@ static void appStateSet(uint8_t newState)
 *******************************************************************************/
 void TrueWind_measPerTask(void)
 {
-// Send TrueWind measurement notification.
-
-	 if(OpenWind_has_Connection)
-	 {
-		 spiReadData();
-		 TrueWind_measNotify(Wind_Direction);
-	 }
-	 else
-	 {
-		PowerDown();
-		SPI_CS_POWEROFF();
-	 }
+    // Send TrueWind measurement notification.
+    if(OpenWind_has_Connection)
+    {
+        spiReadData();
+        TrueWind_measNotify(Wind_Direction);
+    }
+    else
+    {
+        PowerDown();
+        SPI_CS_POWEROFF();
+    }
 }
 
 void SPI_CS_POWEROFF(void)

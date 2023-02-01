@@ -361,7 +361,7 @@ static void simple_peripheral_sendToNPI(uint8_t *buf, uint16_t len);  // Declara
 #define OW_PERIODIC_EVT_DIR               100
 #define OW_PERIODIC_EVT_MOV               1000
 #define OW_PERIODIC_EVT_BAT               1000
-#define OW_PERIODIC_EVT_GPS               250
+#define OW_PERIODIC_EVT_GPS               500
 #define OW_PERIODIC_EVT_LED               10000
 #define OW_PERIODIC_EVT_LED_Connected     5000
 #define OW_PERIODIC_EVT_LED_OFF           100
@@ -375,7 +375,7 @@ static void OpenWind_GPS_Task();
 static void OpenWind_GPS_Task_READ();
 static void OpenWind_BATTERY_Task();
 static void OpenWind_LED_Task();
-static void OpenWind_toggleAdvertising();
+static void OpenWind_setAdvertising(bool value);
 static void OpenWind_setDeviceInfo();
 
 static Clock_Struct ow_clk_wind_dir;
@@ -830,8 +830,8 @@ static void SimplePeripheral_taskFxn(UArg a0, UArg a1)
           }
         }
       }
-      if (events & OW_WIND_DIR) {
-        OpenWind_DIRECTION_Task();
+      if (events & OW_WIND_TASK) {
+          TrueWind_measPerTask();
       }
       if (events & OW_WIND_MOV) {
           OpenWind_MOVEMENT_Task();
@@ -2452,7 +2452,12 @@ static void OpenWind_Clock_Handler(UArg arg)
 {
     //spClockEventData_t *pData = (spClockEventData_t *)arg;
 
-    Event_post(syncEvent, arg);
+    if ((uint8_t)(arg) == OW_WIND_DIR)
+    {
+        OpenWind_DIRECTION_Task();
+    }
+    else
+        Event_post(syncEvent, arg);
 /*
     if (pData->event == OW_WIND_DIR)
     {
@@ -2521,6 +2526,7 @@ static void OpenWind_power_down() {
 static void OpenWind_DIRECTION_Task() {
     if(OpenWind_START_DIRECTION) {
         SensorTagWind_readData();
+        OPENWIND_Event(OW_WIND_TASK);
     }
     Util_startClock(&ow_clk_wind_dir);
 }
@@ -2557,12 +2563,13 @@ static void OpenWind_LED_Task() {
 
     if(sleep && !OpenWind_has_Connection) {
         sleep=false;
+        OpenWind_setAdvertising(false);
         Task_sleep(5000000 / Clock_tickPeriod);//5sekunden
     }
-    else
+    else {
         sleep=true;
-
-    OpenWind_toggleAdvertising();
+    }
+    OpenWind_setAdvertising(true);
 
     if(OpenWind_has_Connection) {
         GPIO_toggle(GREEN_LED);
@@ -2740,16 +2747,18 @@ void SensorTag_updateAdvertisingData(uint8_t location,uint8_t value)
   GapAdv_loadByHandle(advHandleLegacy, GAP_ADV_DATA_TYPE_ADV, sizeof(advertData), advertData);
 }
 
-static void OpenWind_toggleAdvertising() {
-    static bool is_adv=false;
+static void OpenWind_setAdvertising(bool value) {
+
     static bool advertEnabledNonConnectable=false;
 
-    if(is_adv && !OpenWind_has_Connection) {
-        is_adv=false;
+    if(OpenWind_has_Connection)
+        return;
+
+    if(!value) {
         GapAdv_disable(advHandleLegacy);
     }
     else {
-        is_adv=true;
+
         GapAdv_enable(advHandleLegacy, GAP_ADV_ENABLE_OPTIONS_USE_MAX , 0);
         GapAdv_loadByHandle(advHandleLegacy, GAP_ADV_DATA_TYPE_ADV, sizeof(advertData), advertData);
 

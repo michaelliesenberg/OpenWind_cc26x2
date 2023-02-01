@@ -90,7 +90,8 @@ extern "C"
 #define OW_CHAR_MOV                         14
 #define OW_CHAR_GPS                         15
 //OpenWind Events
-#define OW_WIND_DIR                         Event_Id_09
+#define OW_WIND_DIR                         16
+#define OW_WIND_TASK                        Event_Id_09
 #define OW_WIND_MOV                         Event_Id_10
 #define OW_WIND_BAT                         Event_Id_11
 #define OW_WIND_GPS                         Event_Id_12
@@ -98,6 +99,7 @@ extern "C"
 #define OW_AS5055_READ                      Event_Id_18
 #define MOV_INT_EVENT                       Event_Id_21
 #define OW_WIND_LED                         Event_Id_22
+
 
 
 
@@ -111,7 +113,7 @@ extern "C"
 
 #define SP_ALL_EVENTS                       (SP_ICALL_EVT                | \
                                              SP_QUEUE_EVT                 | \
-                                             OW_WIND_DIR           | \
+                                             OW_WIND_TASK           | \
                                              OW_WIND_MOV              | \
                                              OW_WIND_BAT            | \
                                              OW_WIND_GPS         | \

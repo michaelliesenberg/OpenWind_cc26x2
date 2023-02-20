@@ -1,0 +1,214 @@
+******************************************************************************
+            TI ARM Clang Linker Unix v1.2.1                    
+******************************************************************************
+>> Linked Fri Feb 17 06:35:16 2023
+
+OUTPUT FILE NAME:   <bim_onchip_CC1352P_2_LAUNCHXL_nortos_ticlang.out>
+ENTRY POINT SYMBOL: "ResetISR"  address: 0005657d
+
+
+MEMORY CONFIGURATION
+
+         name            origin    length      used     unused   attr    fill
+----------------------  --------  ---------  --------  --------  ----  --------
+  FLASH_BIM             00056000   00001f54  000005aa  000019aa  R  X
+  FLASH_CERT            00057f54   0000004c  00000000  0000004c  R  X
+  FLASH_FNPTR           00057fa0   00000004  00000000  00000004  R  X
+  FLASH_CCFG            00057fa8   00000058  00000058  00000000  R  X
+  SRAM                  20000300   00013d00  00000100  00013c00  RW X
+
+
+SEGMENT ALLOCATION MAP
+
+run origin  load origin   length   init length attrs members
+----------  ----------- ---------- ----------- ----- -------
+00056000    00056000    000005aa   000005aa    r-x
+  00056000    00056000    000000d8   000000d8    r-- .intvecs
+  000560d8    000560d8    000004c2   000004c2    r-x .text
+  0005659a    0005659a    00000010   00000010    r-- .rodata
+00057fa8    00057fa8    00000058   00000058    r--
+  00057fa8    00057fa8    00000058   00000058    r-- .ccfg
+20013f00    20013f00    00000100   00000000    rw-
+  20013f00    20013f00    00000100   00000000    rw- .stack
+
+
+SECTION ALLOCATION MAP
+
+ output                                  attributes/
+section   page    origin      length       input sections
+--------  ----  ----------  ----------   ----------------
+.intvecs   0    00056000    000000d8     
+                  00056000    000000d8     startup_ticlang.o (.intvecs)
+
+.cinit     0    00056000    00000000     
+
+.text      0    000560d8    000004c2     
+                  000560d8    000000e4     driverlib.lib : setup.o (.text.NOROM_SetupTrimDevice)
+                  000561bc    000000c4                   : setup.o (.text.TrimAfterColdResetWakeupFromShutDown)
+                  00056280    00000078                   : osc.o (.text.NOROM_OSC_CapArrayAdjustWorkaround_Boot)
+                  000562f8    00000052     bim_onchip_main.o (.text.Bim_findImage)
+                  0005634a    00000052     driverlib.lib : chipinfo.o (.text.NOROM_ChipInfo_GetHwRevision)
+                  0005639c    00000048                   : aux_sysif.o (.text.NOROM_AUXSYSIFOpModeChange)
+                  000563e4    00000048     led_debug.o (.text.powerUpGpio)
+                  0005642c    00000044     driverlib.lib : prcm.o (.text.NOROM_PRCMPowerDomainsAllOn)
+                  00056470    0000002e                   : chipinfo.o (.text.NOROM_ThisLibraryIsFor_CC13x2_CC26x2_HwRev20AndLater_HaltIfViolated)
+                  0005649e    00000002     startup_ticlang.o (.text.FaultISR)
+                  000564a0    0000002c     libc.a : boot_cortex_m.c.obj (.text:_c_int00_noinit_noargs)
+                  000564cc    00000028     flash_interface_internal.o (.text.readFlashPg)
+                  000564f4    00000024     bim_onchip_main.o (.text.main)
+                  00056518    00000020     bim_util.o (.text.imgIDCheck)
+                  00056538    00000012     bim_util.o (.text.evenBitCount)
+                  0005654a    0000000e     flash_interface_internal.o (.text.IntMasterDisable)
+                  00056558    0000000c     driverlib.lib : cpu.o (.text.NOROM_CPUcpsid)
+                  00056564    0000000c                   : cpu.o (.text.NOROM_CPUcpsie)
+                  00056570    0000000c     led_debug.o (.text.lightRedLed)
+                  0005657c    0000000a     startup_ticlang.o (.text.ResetISR)
+                  00056586    00000008     bim_util.o (.text.jumpToPrgEntry)
+                  0005658e    00000004     libc.a : pre_init.c.obj (.text._system_pre_init)
+                  00056592    00000004            : exit.c.obj (.text:abort)
+                  00056596    00000002     startup_ticlang.o (.text.IntDefaultHandler)
+                  00056598    00000002     startup_ticlang.o (.text.NmiSR)
+
+.rodata    0    0005659a    00000010     
+                  0005659a    00000008     bim_util.o (.rodata.OAD_IMG_ID)
+                  000565a2    00000008     driverlib.lib : aux_sysif.o (.rodata.cst4)
+
+.init_array 
+*          0    00056000    00000000     UNINITIALIZED
+
+.ccfg      0    00057fa8    00000058     
+                  00057fa8    00000058     ccfg_app.o (.ccfg)
+
+.stack     0    20013f00    00000100     UNINITIALIZED
+                  20013f00    00000004     libc.a : boot_cortex_m.c.obj (.stack)
+                  20013f04    000000fc     --HOLE--
+
+__llvm_prf_cnts 
+*          0    20000300    00000000     UNINITIALIZED
+
+MODULE SUMMARY
+
+       Module                       code   ro data   rw data
+       ------                       ----   -------   -------
+    ./Application/
+       startup_ticlang.o            16     216       0      
+       bim_onchip_main.o            118    0         0      
+       ccfg_app.o                   0      88        0      
+       led_debug.o                  84     0         0      
+       bim_util.o                   58     8         0      
+       flash_interface_internal.o   54     0         0      
+    +--+----------------------------+------+---------+---------+
+       Total:                       330    312       0      
+                                                            
+    /Applications/ti/simplelink_cc13xx_cc26xx_sdk_6_40_00_13/source/ti/devices/cc13x2_cc26x2/driverlib/bin/ticlang/driverlib.lib
+       setup.o                      424    0         0      
+       chipinfo.o                   128    0         0      
+       osc.o                        120    0         0      
+       aux_sysif.o                  72     8         0      
+       prcm.o                       68     0         0      
+       cpu.o                        24     0         0      
+    +--+----------------------------+------+---------+---------+
+       Total:                       836    8         0      
+                                                            
+    /Users/michaelliesenberg/ti/ti_cgt_tiarmclang_1.2.1.STS/lib/armv7em-ti-none-eabihf/c/libc.a
+       boot_cortex_m.c.obj          44     0         0      
+       exit.c.obj                   4      0         0      
+       pre_init.c.obj               4      0         0      
+    +--+----------------------------+------+---------+---------+
+       Total:                       52     0         0      
+                                                            
+       Stack:                       0      0         256    
+    +--+----------------------------+------+---------+---------+
+       Grand Total:                 1218   320       256    
+
+
+GLOBAL SYMBOLS: SORTED ALPHABETICALLY BY Name 
+
+address   name                                                               
+-------   ----                                                               
+00056592  C$$EXIT                                                            
+0005639d  NOROM_AUXSYSIFOpModeChange                                         
+00056559  NOROM_CPUcpsid                                                     
+00056565  NOROM_CPUcpsie                                                     
+0005634b  NOROM_ChipInfo_GetHwRevision                                       
+00056281  NOROM_OSC_CapArrayAdjustWorkaround_Boot                            
+0005642d  NOROM_PRCMPowerDomainsAllOn                                        
+000560d9  NOROM_SetupTrimDevice                                              
+00056471  NOROM_ThisLibraryIsFor_CC13x2_CC26x2_HwRev20AndLater_HaltIfViolated
+0005659a  OAD_IMG_ID                                                         
+0005657d  ResetISR                                                           
+20014000  __STACK_END                                                        
+00000100  __STACK_SIZE                                                       
+20014000  __STACK_TOP                                                        
+00056000  __TI_CINIT_Base                                                    
+00056000  __TI_CINIT_Limit                                                   
+00056000  __TI_CINIT_Warm                                                    
+ffffffff  __TI_pprof_out_hndl                                                
+ffffffff  __TI_prof_data_size                                                
+ffffffff  __TI_prof_data_start                                               
+00056000  __TI_static_base__                                                 
+ffffffff  __binit__                                                          
+00057fa8  __ccfg                                                             
+UNDEFED   __mpu_init                                                         
+20013f00  __stack                                                            
+20000300  __start___llvm_prf_cnts                                            
+20000300  __stop___llvm_prf_cnts                                             
+000564a1  _c_int00_noinit_noargs                                             
+0005658f  _system_pre_init                                                   
+00056593  abort                                                              
+ffffffff  binit                                                              
+00056539  evenBitCount                                                       
+00056000  g_pfnVectors                                                       
+00056519  imgIDCheck                                                         
+00056587  jumpToPrgEntry                                                     
+00056571  lightRedLed                                                        
+000564f5  main                                                               
+000563e5  powerUpGpio                                                        
+000564cd  readFlashPg                                                        
+
+
+GLOBAL SYMBOLS: SORTED BY Symbol Address 
+
+address   name                                                               
+-------   ----                                                               
+00000100  __STACK_SIZE                                                       
+00056000  __TI_CINIT_Base                                                    
+00056000  __TI_CINIT_Limit                                                   
+00056000  __TI_CINIT_Warm                                                    
+00056000  __TI_static_base__                                                 
+00056000  g_pfnVectors                                                       
+000560d9  NOROM_SetupTrimDevice                                              
+00056281  NOROM_OSC_CapArrayAdjustWorkaround_Boot                            
+0005634b  NOROM_ChipInfo_GetHwRevision                                       
+0005639d  NOROM_AUXSYSIFOpModeChange                                         
+000563e5  powerUpGpio                                                        
+0005642d  NOROM_PRCMPowerDomainsAllOn                                        
+00056471  NOROM_ThisLibraryIsFor_CC13x2_CC26x2_HwRev20AndLater_HaltIfViolated
+000564a1  _c_int00_noinit_noargs                                             
+000564cd  readFlashPg                                                        
+000564f5  main                                                               
+00056519  imgIDCheck                                                         
+00056539  evenBitCount                                                       
+00056559  NOROM_CPUcpsid                                                     
+00056565  NOROM_CPUcpsie                                                     
+00056571  lightRedLed                                                        
+0005657d  ResetISR                                                           
+00056587  jumpToPrgEntry                                                     
+0005658f  _system_pre_init                                                   
+00056592  C$$EXIT                                                            
+00056593  abort                                                              
+0005659a  OAD_IMG_ID                                                         
+00057fa8  __ccfg                                                             
+20000300  __start___llvm_prf_cnts                                            
+20000300  __stop___llvm_prf_cnts                                             
+20013f00  __stack                                                            
+20014000  __STACK_END                                                        
+20014000  __STACK_TOP                                                        
+ffffffff  __TI_pprof_out_hndl                                                
+ffffffff  __TI_prof_data_size                                                
+ffffffff  __TI_prof_data_start                                               
+ffffffff  __binit__                                                          
+ffffffff  binit                                                              
+UNDEFED   __mpu_init                                                         
+
+[39 symbols]

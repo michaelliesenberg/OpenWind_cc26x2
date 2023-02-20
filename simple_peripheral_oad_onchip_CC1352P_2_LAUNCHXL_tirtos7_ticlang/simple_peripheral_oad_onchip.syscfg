@@ -1,0 +1,263 @@
+/**
+ * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
+ * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
+ * @cliArgs --board "/ti/boards/CC1352P_2_LAUNCHXL" --rtos "tirtos7" --product "simplelink_cc13xx_cc26xx_sdk@6.40.00.13"
+ * @versions {"tool":"1.15.0+2826"}
+ */
+
+/**
+ * Import the modules used in this configuration.
+ */
+const ble          = scripting.addModule("/ti/ble5stack/ble");
+const CCFG         = scripting.addModule("/ti/devices/CCFG");
+const rfdesign     = scripting.addModule("/ti/devices/radioconfig/rfdesign");
+const AESCCM       = scripting.addModule("/ti/drivers/AESCCM");
+const AESCCM1      = AESCCM.addInstance();
+const AESCTRDRBG   = scripting.addModule("/ti/drivers/AESCTRDRBG");
+const AESCTRDRBG1  = AESCTRDRBG.addInstance();
+const AESECB       = scripting.addModule("/ti/drivers/AESECB");
+const AESECB1      = AESECB.addInstance();
+const ECDH         = scripting.addModule("/ti/drivers/ECDH");
+const ECDH1        = ECDH.addInstance();
+const GPIO         = scripting.addModule("/ti/drivers/GPIO");
+const GPIO1        = GPIO.addInstance();
+const GPIO2        = GPIO.addInstance();
+const GPIO3        = GPIO.addInstance();
+const GPIO4        = GPIO.addInstance();
+const GPIO5        = GPIO.addInstance();
+const GPIO6        = GPIO.addInstance();
+const GPIO7        = GPIO.addInstance();
+const GPIO8        = GPIO.addInstance();
+const I2C          = scripting.addModule("/ti/drivers/I2C", {}, false);
+const I2C1         = I2C.addInstance();
+const NVS          = scripting.addModule("/ti/drivers/NVS");
+const NVS1         = NVS.addInstance();
+const NVS2         = NVS.addInstance();
+const NVS3         = NVS.addInstance();
+const Power        = scripting.addModule("/ti/drivers/Power");
+const RF           = scripting.addModule("/ti/drivers/RF");
+const SPI          = scripting.addModule("/ti/drivers/SPI", {}, false);
+const SPI1         = SPI.addInstance();
+const TRNG         = scripting.addModule("/ti/drivers/TRNG");
+const TRNG1        = TRNG.addInstance();
+const Timer        = scripting.addModule("/ti/drivers/Timer", {}, false);
+const Timer1       = Timer.addInstance();
+const UART2        = scripting.addModule("/ti/drivers/UART2", {}, false);
+const UART21       = UART2.addInstance();
+const Watchdog     = scripting.addModule("/ti/drivers/Watchdog", {}, false);
+const Watchdog1    = Watchdog.addInstance();
+const Settings     = scripting.addModule("/ti/posix/tirtos/Settings");
+const BIOS         = scripting.addModule("/ti/sysbios/BIOS");
+const GateMutexPri = scripting.addModule("/ti/sysbios/gates/GateMutexPri");
+const HeapCallback = scripting.addModule("/ti/sysbios/heaps/HeapCallback");
+const Event        = scripting.addModule("/ti/sysbios/knl/Event");
+const Idle         = scripting.addModule("/ti/sysbios/knl/Idle", {}, false);
+const Idle2        = Idle.addInstance();
+const Mailbox      = scripting.addModule("/ti/sysbios/knl/Mailbox");
+const Error        = scripting.addModule("/ti/sysbios/runtime/Error");
+const SysCallback  = scripting.addModule("/ti/sysbios/runtime/SysCallback");
+const Timestamp    = scripting.addModule("/ti/sysbios/runtime/Timestamp");
+
+/**
+ * Write custom configuration values to the imported modules.
+ */
+ble.rfDesign                                              = "LAUNCHXL-CC1352P-2";
+ble.addressMode                                           = "ADDRMODE_PUBLIC";
+ble.lockProject                                           = true;
+ble.oadProject                                            = true;
+ble.ledDebug                                              = true;
+ble.oadDebug                                              = true;
+ble.oadFeature                                            = true;
+ble.periodicAdv                                           = true;
+ble.disablePairing                                        = true;
+ble.deviceName                                            = "OpenWind";
+ble.bondIOCaps                                            = "GAPBOND_IO_CAP_NO_INPUT_NO_OUTPUT";
+ble.bonding                                               = false;
+ble.tbmActiveItemsOnly                                    = false;
+ble.defaultTxPower                                        = "HCI_EXT_TX_POWER_P2_20_DBM";
+ble.maxPDUSize                                            = 255;
+ble.maxConnNum                                            = 1;
+ble.connUpdateParamsPeripheral.$name                      = "ti_ble5stack_general_ble_conn_update_params0";
+ble.connUpdateParamsPeripheral.reqMinConnInt              = 30;
+ble.connUpdateParamsPeripheral.reqMaxConnInt              = 100;
+ble.advSet1.$name                                         = "ti_ble5stack_broadcaster_advertisement_set0";
+ble.advSet1.advParam1.$name                               = "ti_ble5stack_broadcaster_advertisement_params0";
+ble.advSet1.advData1.$name                                = "ti_ble5stack_broadcaster_advertisement_data0";
+ble.advSet1.advData1.GAP_ADTYPE_FLAGS                     = true;
+ble.advSet1.advData1.advertisingFlags                     = ["GAP_ADTYPE_FLAGS_BREDR_NOT_SUPPORTED","GAP_ADTYPE_FLAGS_GENERAL"];
+ble.advSet1.advData1.GAP_ADTYPE_16BIT_MORE                = true;
+ble.advSet1.advData1.numOfUUIDs16More                     = 2;
+ble.advSet1.advData1.UUID016More                          = 0xFFC0;
+ble.advSet1.advData1.UUID116More                          = 0xFFF0;
+ble.advSet1.advData1.GAP_ADTYPE_LOCAL_NAME_SHORT          = true;
+ble.advSet1.advData1.shortenedLocalName                   = "OpenWind";
+ble.advSet1.scanRes1.$name                                = "ti_ble5stack_broadcaster_advertisement_data1";
+ble.advSet1.scanRes1.GAP_ADTYPE_LOCAL_NAME_COMPLETE       = true;
+ble.advSet1.scanRes1.GAP_ADTYPE_SLAVE_CONN_INTERVAL_RANGE = true;
+ble.advSet1.scanRes1.GAP_ADTYPE_POWER_LEVEL               = true;
+ble.advSet1.scanRes1.TXPower                              = 5;
+ble.advSet1.scanRes1.minConnInterval                      = 20;
+ble.advSet1.scanRes1.maxConnInterval                      = 100;
+ble.advSet2.$name                                         = "ti_ble5stack_broadcaster_advertisement_set1";
+ble.advSet2.advParam2.$name                               = "ti_ble5stack_broadcaster_advertisement_params1";
+ble.advSet2.advParam2.advType                             = "extended";
+ble.advSet2.advData2.$name                                = "ti_ble5stack_broadcaster_advertisement_data2";
+ble.advSet2.advData2.GAP_ADTYPE_FLAGS                     = true;
+ble.advSet2.advData2.advertisingFlags                     = ["GAP_ADTYPE_FLAGS_BREDR_NOT_SUPPORTED","GAP_ADTYPE_FLAGS_GENERAL"];
+ble.advSet2.advData2.GAP_ADTYPE_16BIT_MORE                = true;
+ble.advSet2.advData2.numOfUUIDs16More                     = 2;
+ble.advSet2.advData2.UUID016More                          = 0xFFC0;
+ble.advSet2.advData2.UUID116More                          = 0xFFF0;
+ble.advSet2.scanRes2.$name                                = "ti_ble5stack_broadcaster_advertisement_data3";
+ble.radioConfig.codeExportConfig.$name                    = "ti_devices_radioconfig_code_export_param0";
+
+CCFG.enableCodeGeneration = false;
+
+rfdesign.rfDesign = "LAUNCHXL-CC1352P-2";
+rfdesign.fbSub1g  = "none";
+
+AESCCM1.$name = "CONFIG_AESCCM0";
+
+AESCTRDRBG1.$name              = "CONFIG_AESCTRDRBG_0";
+AESCTRDRBG1.aesctrObject.$name = "CONFIG_AESCTR_0";
+
+AESECB1.$name = "CONFIG_AESECB0";
+
+ECDH1.$name = "CONFIG_ECDH0";
+
+GPIO1.$name           = "BLUE_LED";
+GPIO1.gpioPin.$assign = "boosterpack.40";
+scripting.suppress("Connected to hardware,@@@.+?@@@ is connected to LaunchPad LED Green on the CC1352P-2 LaunchPad\\. Consider selecting it in 'use hardware' above\\. @@@.+?@@@", GPIO1, "gpioPin");
+
+GPIO2.$name           = "GREEN_LED";
+GPIO2.gpioPin.$assign = "boosterpack.39";
+scripting.suppress("Connected to hardware,@@@.+?@@@ is connected to LaunchPad LED Red on the CC1352P-2 LaunchPad\\. Consider selecting it in 'use hardware' above\\. @@@.+?@@@", GPIO2, "gpioPin");
+
+GPIO3.$name           = "RED_LED";
+GPIO3.gpioPin.$assign = "boosterpack.10";
+
+GPIO4.$name           = "AS5055_CS";
+GPIO4.mode            = "Output";
+GPIO4.gpioPin.$assign = "boosterpack.13";
+scripting.suppress("Connected to hardware,@@@.+?@@@ is connected to LaunchPad Button BTN-1 \\(Left\\) on the CC1352P-2 LaunchPad\\. Consider selecting it in 'use hardware' above\\. @@@.+?@@@", GPIO4, "gpioPin");
+
+GPIO5.$name            = "AS5055_INT";
+GPIO5.interruptTrigger = "Falling Edge";
+
+GPIO6.$name            = "SPEED_INT";
+GPIO6.interruptTrigger = "Falling Edge";
+GPIO6.gpioPin.$assign  = "boosterpack.8";
+scripting.suppress("Connected to hardware,@@@.+?@@@ is connected to LaunchPad Button BTN-2 \\(Right\\) on the CC1352P-2 LaunchPad\\. Consider selecting it in 'use hardware' above\\. @@@.+?@@@", GPIO6, "gpioPin");
+
+GPIO7.$name            = "BNO_INT";
+GPIO7.interruptTrigger = "Falling Edge";
+
+GPIO8.$name = "LOAD_CTRL";
+GPIO8.mode  = "Output";
+
+I2C1.$name              = "CONFIG_I2C_0";
+I2C1.i2c.sdaPin.$assign = "boosterpack.32";
+I2C1.i2c.sclPin.$assign = "boosterpack.31";
+
+NVS1.$name                    = "CONFIG_NVSINTERNAL";
+NVS1.internalFlash.$name      = "ti_drivers_nvs_NVSCC26XX0";
+NVS1.internalFlash.regionBase = 0x34000;
+NVS1.internalFlash.regionSize = 0x4000;
+
+NVS2.$name                    = "CONFIG_NVSINTERNAL1";
+NVS2.internalFlash.$name      = "ti_drivers_nvs_NVSCC26XX1";
+NVS2.internalFlash.regionSize = 0x34000;
+NVS2.internalFlash.regionType = "Pointer";
+
+NVS3.$name                    = "CONFIG_NVS_0";
+NVS3.internalFlash.$name      = "ti_drivers_nvs_NVSCC26XX2";
+NVS3.internalFlash.regionBase = 0x48000;
+NVS3.internalFlash.regionSize = 0x4000;
+
+RF.$hardware = system.deviceData.board.components["SKY13317-373LF"];
+
+SPI1.$name               = "CONFIG_SPI_0";
+SPI1.spi.sclkPin.$assign = "boosterpack.7";
+SPI1.spi.misoPin.$assign = "boosterpack.14";
+SPI1.spi.mosiPin.$assign = "boosterpack.15";
+scripting.suppress("Connected to hardware,@@@.+?@@@ is connected to LaunchPad SPI Bus on the CC1352P-2 LaunchPad\\. Consider selecting it in 'use hardware' above\\. @@@.+?@@@", SPI1.spi, "sclkPin");
+scripting.suppress("Connected to hardware,@@@.+?@@@ is connected to LaunchPad SPI Bus on the CC1352P-2 LaunchPad\\. Consider selecting it in 'use hardware' above\\. @@@.+?@@@", SPI1.spi, "misoPin");
+scripting.suppress("Connected to hardware,@@@.+?@@@ is connected to LaunchPad SPI Bus on the CC1352P-2 LaunchPad\\. Consider selecting it in 'use hardware' above\\. @@@.+?@@@", SPI1.spi, "mosiPin");
+
+TRNG1.$name = "CONFIG_TRNG_0";
+
+Timer1.$name               = "CONFIG_TIMER_0";
+Timer1.timerType           = "32 Bits";
+Timer1.timerInstance.$name = "CONFIG_GPTIMER_0";
+
+UART21.$name              = "CONFIG_UART2_0";
+UART21.uart.txPin.$assign = "boosterpack.4";
+UART21.uart.rxPin.$assign = "boosterpack.3";
+scripting.suppress("Connected to hardware,@@@.+?@@@ is connected to XDS110 UART on the CC1352P-2 LaunchPad\\. Consider selecting it in 'use hardware' above\\. @@@.+?@@@", UART21.uart, "txPin");
+scripting.suppress("Connected to hardware,@@@.+?@@@ is connected to XDS110 UART on the CC1352P-2 LaunchPad\\. Consider selecting it in 'use hardware' above\\. @@@.+?@@@", UART21.uart, "rxPin");
+
+Watchdog1.$name  = "CONFIG_WATCHDOG_0";
+Watchdog1.period = 20000;
+
+BIOS.assertsEnabled = false;
+BIOS.rtsGateType    = "BIOS_GateMutexPri";
+BIOS.heapSize       = 0x00000000;
+BIOS.heapType       = "HeapCallback";
+
+const Hwi              = scripting.addModule("/ti/sysbios/family/arm/m3/Hwi", {}, false);
+Hwi.enableException    = false;
+Hwi.resetVectorAddress = system.utils.bigInt("00000090",16);
+
+HeapCallback.initFxn           = "osalHeapInitFxn";
+HeapCallback.allocInstFxn      = "osalHeapAllocFxn";
+HeapCallback.freeInstFxn       = "osalHeapFreeFxn";
+HeapCallback.getStatsInstFxn   = "osalHeapGetStatsFxn";
+HeapCallback.isBlockingInstFxn = "osalHeapIsBlockingFxn";
+
+const Clock      = scripting.addModule("/ti/sysbios/knl/Clock", {}, false);
+Clock.tickPeriod = 10;
+
+const Timer_1 = scripting.addModule("/ti/sysbios/family/arm/cc26xx/Timer", {}, false);
+
+Idle2.$name   = "powerIdle";
+Idle2.idleFxn = "Power_idleFunc";
+
+const Semaphore            = scripting.addModule("/ti/sysbios/knl/Semaphore", {}, false);
+Semaphore.supportsPriority = false;
+
+const Swi         = scripting.addModule("/ti/sysbios/knl/Swi", {}, false);
+Swi.numPriorities = 6;
+
+const Task             = scripting.addModule("/ti/sysbios/knl/Task", {}, false);
+Task.defaultStackSize  = 512;
+Task.idleTaskStackSize = 768;
+Task.numPriorities     = 6;
+
+Error.policy       = "Error_SPIN";
+Error.printDetails = false;
+
+const System           = scripting.addModule("/ti/sysbios/runtime/System", {}, false);
+System.abortFxn        = "System_abortSpin";
+System.exitFxn         = "System_exitSpin";
+System.extendedFormats = "%f";
+System.supportModule   = "SysCallback";
+
+/**
+ * Pinmux solution for unlocked pins/peripherals. This ensures that minor changes to the automatic solver in a future
+ * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
+ * re-solve from scratch.
+ */
+GPIO5.gpioPin.$suggestSolution              = "boosterpack.36";
+GPIO7.gpioPin.$suggestSolution              = "boosterpack.19";
+GPIO8.gpioPin.$suggestSolution              = "boosterpack.9";
+I2C1.i2c.$suggestSolution                   = "I2C0";
+RF.rfAntennaPin0.$suggestSolution           = "ball.41";
+RF.rfAntennaPin1.$suggestSolution           = "ball.42";
+RF.rfAntennaPin2.$suggestSolution           = "ball.43";
+SPI1.spi.$suggestSolution                   = "SSI0";
+SPI1.spi.dmaRxChannel.$suggestSolution      = "DMA_CH3";
+SPI1.spi.dmaTxChannel.$suggestSolution      = "DMA_CH4";
+Timer1.timerInstance.timer.$suggestSolution = "GPTM0";
+UART21.uart.$suggestSolution                = "UART0";
+Watchdog1.watchdog.$suggestSolution         = "WDT0";
+Timer_1.rtc.$suggestSolution                = "RTC0";
